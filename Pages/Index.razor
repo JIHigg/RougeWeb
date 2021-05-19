@@ -1,0 +1,62 @@
+﻿@page "/"
+
+<h1>Hello, world!</h1>
+
+
+    <div class="row">
+        <div class="col-sm-6">
+            @code{
+                List<Machine> machines = new List<Machine>()
+                {
+
+                    new Machine()
+                {
+                    Id = new Guid(),
+                    MachineName = "Neo",
+                    Status = true,
+                    LastCommand = DateTime.Now
+                },
+                    new Machine()
+                    {
+                        Id = new Guid(),
+                        MachineName = "Morpheus",
+                        Status = false,
+                        LastCommand = DateTime.Now
+                    }
+                };
+
+                private void ActivateMe(Machine subject)
+        {
+                    subject.Status = true;
+                    subject.LastCommand = DateTime.Now;
+        }
+            }
+            @foreach(var machine in machines) 
+            { 
+
+            <div class="card">
+                <h5 class="card-header">Machine Name: @machine.MachineName </h5>
+                <div class="card-body">
+                    Machine ID: @machine.Id.ToString();
+                    <br />
+                    @if (machine.Status)
+                    {
+                        <span class="text-right">Status: Online</span>
+                    }
+                    else
+                    {<span class="text-right">Status: Offline</span>}
+                    <br />
+                    Last Command Recieved: @machine.LastCommand
+                </div>
+                <div class="card-footer text-right">
+                    <button class="btn btn-primary" @onclick="@(() => ActivateMe(machine))" >Send Command</button>
+                </div>
+            </div>
+              }
+
+            
+        </div>
+    </div>
+
+
+<SurveyPrompt Title="How is Blazor working for you?" />
